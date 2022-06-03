@@ -20,11 +20,52 @@ Contactno:String
 
 
 ))
-Mongoose.connect("mongodb+srv://appu:2345@cluster0.2q4qp.mongodb.net/busdata")
-app.post("/busapp",(req,res)=>{
+Mongoose.connect("mongodb+srv://gopika:1234@cluster0.2q4qp.mongodb.net/busdata")
+app.post("/api/view",(req,res)=>{
+    busmodel.find((error,data)=>{
+        if(error)
+        {
+            res.send({"status":error})
+        }
+        else{
+
+            res.send({"status":"success","data":data})
+        }
+    })
+    
+})
+
+app.post("/api/search",(req,res)=>{
+    var getRoute=req.body
+    busmodel.find(getRoute,(error,data)=>{
+        if(error)
+        {
+            res.send({"status":error})}
+        else
+        {
+            res.send(data)
+           }   
+       })   
+       })
+      
+      
+       app.post("/api/delete",(req,res)=>{
+    var getId=req.body
+    busmodel.findOneAndDelete(getId,(error,data)=>{
+        if(error){
+res.send({"status":error})
+        }
+        else{
+ res.send({"status":"success"})       
+
+        }
+    })
+})
+
+app.post("/api/busapp",(req,res)=>{
     var getRoute=req.body.Route
 var getBusname=req.body.Busname
-var getBusregno=req.body.Busregno
+var getBusregno=req.body.Busregnogi
 var getOwnername=req.body.Ownername
 var getContactno=req.body.Contactno
 
